@@ -1,17 +1,16 @@
 import React, { Component } from 'react'
+import Track from './Track'
 
-export class Series extends Component {
+export class Programme extends Component {
     constructor(props){
         super(props)
         this.state={
-
+            episodes : null
         }
     }
 
     handleClick = () => {
-        
-        console.log(this.props.info.programme_series_id)
-        fetch(`${process.env.REACT_APP_API_URL}/episodes/${this.props.info.programme_series_id}`)
+        fetch(`${process.env.REACT_APP_API_URL}/programme/${this.props.info.programme_id}`)
             .then(res => {
                 if (res.status !== 200) {
                     console.log('Looks like there was a problem. Status Code: ' +
@@ -22,9 +21,9 @@ export class Series extends Component {
                 .then(data =>  {
                     console.log(data)
                     this.setState({
-                        episodes: data.episodes,
+                        episodes: data,
                     })
-                    this.props.handleEpisodeClick(data.episodes)
+                    this.props.handleProgrammeClick(data)
                 })
     
             })
@@ -34,16 +33,23 @@ export class Series extends Component {
         
     }
 
-   
-
     render() {
         const { info } = this.props
+
+        let tracks_display;
+
+        if (this.state.episodes) {
+            tracks_display = this.state.episodes.tracks.map(t => <Track artist={t.artist} title={t.title}></Track>)
+        }
+
         return (
-            <div style={{color:'white'}} onClick={this.handleClick}>
-                <img src={info.programme_image} alt=""/>{info.programme_series_name}
+            <div onClick={this.handleClick}>
+                <img src={info.programme_image} alt=""/>
+                {info.programme_name}
+                {tracks_display}
             </div>
         )
     }
 }
 
-export default Series
+export default Programme
