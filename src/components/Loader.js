@@ -19,11 +19,18 @@ const Container = Keyframes.Spring({
     }
   })
 
+const center = {
+    position: 'fixed',
+    left: '50%',
+    top: '50%',
+    transform: 'translate(-50%, -50%)'
+}
+
 export class Loader extends Component {
     
     render() {
         return (
-            <div>
+            <div style={center}>
                 <Spring
                 config={{duration:"3500"}}
                 from={{ 
