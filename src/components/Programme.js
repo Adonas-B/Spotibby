@@ -1,5 +1,18 @@
 import React, { Component } from 'react'
+import styled from 'styled-components'
 import Track from './Track'
+
+const ProgrammeContainer =styled.div`
+    display: flex;
+    color: rgb(255,255,255);
+
+`
+
+const ProgrammeImage =styled.img`
+    height: 90px;
+    width: 90px:
+    padding-right: 40px;
+`
 
 export class Programme extends Component {
     constructor(props){
@@ -38,14 +51,16 @@ export class Programme extends Component {
 
         let tracks_display;
 
-        if (this.state.episodes) {
-            tracks_display = this.state.episodes.tracks.map(t => <Track artist={t.artist} title={t.title}></Track>)
+        if (info['tracks']) {
+            tracks_display = info['tracks'].map(t => <Track artist={t.artist} title={t.title}></Track>)
         }
 
         return (
-            <div onClick={this.handleClick}>
-                <img src={info.programme_image} alt=""/>
-                {info.programme_name}
+            <div>
+                <ProgrammeContainer style={{color: 'white'}} onClick={this.handleClick}>
+                    <ProgrammeImage src={info.programme_image} alt=""/>
+                    <h2>{info.programme_name}</h2>
+                </ProgrammeContainer>
                 {tracks_display}
             </div>
         )

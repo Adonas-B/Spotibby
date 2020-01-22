@@ -1,28 +1,57 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
-import search_icon from '../images/baseline_search_white_24dp.png'
+import styled, {keyframes} from 'styled-components'
+import search_icon from '../images/baseline_search_white_48dp.png'
 import Loader from './Loader'
 import Series from './Series'
 import Programme from './Programme'
 
 const SearchContainer = styled.div`
     color: rgb(255,255,255);
-    // display: flex;
-    // justify-content: center;
+    // padding-top: 45px;
+    margin-top: 5em;
+    margin-left: 5em;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 `
 
-const SearchInput = styled.input`
-    border: solid black 1px;
+const colorFade = keyframes`
+    0% {
+        border-bottom: solid 8px #f54997;
+        padding-left: 0px;
+    }
+    50% {
+        border-bottom: solid 8px #1DB954;
+        padding-left: 200px;
+    }
+    100% {
+        border-bottom: solid 8px #f54997;
+        padding-left: 0px;
+    }
+`
+
+const SearchInput = styled.input.attrs({type: 'text', autofocus:'true'})`
+    font-family: 'Alata', sans-serif;
+    border: none;
     // height: 24px;
-    font-size: 24px;
-    width: 100px;
-    color: rgba(230,230,230);
+    font-size: 48px;
+    width: 300px;
+    color: rgba(255, 255,255);
     background-color: rgb(25,20,20);
+    border-bottom: solid 8px #f54997;
+    animation: ${props => props.go ? colorFade : ""} 3s linear infinite;
+    :focus {
+        outline: none;
+    }
     ::-webkit-input-placeholder {
         font-family: 'Alata', sans-serif;
-        color: rgba(230,230,230);
-        background-color: rgb(0,0,0);
+        color: rgba(210,210,210);
+        // background-color: rgb(0,0,0);
       }
+`
+
+const Icon = styled.img`
+    transform: translate(-48px, 12px);
 `
 
 export class Search extends Component {
@@ -65,6 +94,7 @@ export class Search extends Component {
                 console.log(data)
                 this.setState({
                     search_results: data.search_results,
+                    currentDisplay: 'search-results',
                     isSearching: false
                 })
             })
@@ -83,16 +113,17 @@ export class Search extends Component {
     }
 
     handleProgrammeClick = (programme) => {
-        console.log(programme)
+        console.log(programme['id'])
         this.setState({
             programme: programme,
-            currentDisplay: 'programme'
+            currentDisplay: 'episodes',
+            currentProgramme: programme['id']
         })
     }
 
 
     render() {
-        const { isSearching, search_results, episodes, currentDisplay } = this.state
+        const { isSearching, search_results, episodes, currentDisplay, search_term, programme } = this.state
         let search_results_display;
         let episodes_display;
 
@@ -106,29 +137,47 @@ export class Search extends Component {
         } 
 
         if (episodes) {
-            episodes_display = episodes.map( e => 
-                <Programme 
+            episodes_display = episodes.map( (e, index) => 
+                <Programme
+                    key={index} 
                     info={e} 
                     handleProgrammeClick={this.handleProgrammeClick}>
                 </Programme>
             )
         }
+
+        if (programme){
+            episodes_display = <Programme info={programme}> </Programme>
+        }
+
+        
+
+
         return (
             <div>
-                {isSearching && <Loader></Loader>}
-                {currentDisplay == 'search' ?
+                {/* {isSearching && <Loader ></Loader>} */}
+                {currentDisplay === 'search' ?
                 <SearchContainer>
-                    <SearchInput placeholder="Search" onChange={this.handleSearchChange}></SearchInput>
-                    <img src={search_icon} alt="Search Button" onClick={this.handleSearchClick}/>
-                    <div>For your favourite BBC DJ.</div>
                     <div>
-                        {search_results_display}
+                        <SearchInput 
+                            autofocus
+                            go={isSearching}
+                            placeholder="Search" 
+                            onChange={this.handleSearchChange}>
+                        </SearchInput>
+                        <Icon src={search_icon} alt="Search Button" onClick={this.handleSearchClick}/>
                     </div>
+                        <h2>{isSearching ? `Searching for ${search_term}...` : "For your favourite BBC DJ."}</h2>
                 </SearchContainer>
                 : null}
-                {currentDisplay == 'episodes' ?
-                <div>
 
+                {currentDisplay === 'search-results'?
+                <div>
+                    {search_results_display}
+                </div> : null}
+
+                {currentDisplay === 'episodes' ?
+                <div>
                     {episodes_display}
                 </div>
                 : null}

@@ -1,4 +1,15 @@
 import React, { Component } from 'react'
+import styled from 'styled-components'
+
+const SeriesContainer =styled.div`
+    display: flex;
+    color: rgb(255,255,255);
+
+`
+
+const SeriesImage =styled.img`
+    padding-right: 40px;
+`
 
 export class Series extends Component {
     constructor(props){
@@ -11,6 +22,7 @@ export class Series extends Component {
     handleClick = () => {
         
         console.log(this.props.info.programme_series_id)
+        console.log(`${process.env.REACT_APP_API_URL}/episodes/${this.props.info.programme_series_id}`)
         fetch(`${process.env.REACT_APP_API_URL}/episodes/${this.props.info.programme_series_id}`)
             .then(res => {
                 if (res.status !== 200) {
@@ -39,9 +51,10 @@ export class Series extends Component {
     render() {
         const { info } = this.props
         return (
-            <div style={{color:'white'}} onClick={this.handleClick}>
-                <img src={info.programme_image} alt=""/>{info.programme_series_name}
-            </div>
+            <SeriesContainer onClick={this.handleClick}>
+                <SeriesImage src={info.programme_image} alt={info.programme_series_name}/>
+                <h1>{info.programme_series_name}</h1>
+            </SeriesContainer>
         )
     }
 }
