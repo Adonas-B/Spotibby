@@ -8,8 +8,8 @@ import Programme from './Programme'
 const SearchContainer = styled.div`
     color: rgb(255,255,255);
     // padding-top: 45px;
-    margin-top: 5em;
-    margin-left: 5em;
+    // margin-top: 5em;
+    // margin-left: 5em;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -48,6 +48,15 @@ const SearchInput = styled.input.attrs({type: 'text', autofocus:'true'})`
         color: rgba(210,210,210);
         // background-color: rgb(0,0,0);
       }
+`
+
+const SearchResultsContainer = styled.div`
+    //   display: flex;
+`
+
+const EpisodesContainer = styled.div`
+      display: flex;
+      overflow: auto;
 `
 
 const Icon = styled.img`
@@ -94,7 +103,7 @@ export class Search extends Component {
                 console.log(data)
                 this.setState({
                     search_results: data.search_results,
-                    currentDisplay: 'search-results',
+                    // currentDisplay: 'search-results',
                     isSearching: false
                 })
             })
@@ -108,7 +117,7 @@ export class Search extends Component {
     handleEpisodeClick = (episodes) => {
         this.setState({
             episodes: episodes,
-            currentDisplay: 'episodes'
+            // currentDisplay: 'episodes'
         })
     }
 
@@ -116,7 +125,7 @@ export class Search extends Component {
         console.log(programme['id'])
         this.setState({
             programme: programme,
-            currentDisplay: 'episodes',
+            // currentDisplay: 'episodes',
             currentProgramme: programme['id']
         })
     }
@@ -137,18 +146,33 @@ export class Search extends Component {
         } 
 
         if (episodes) {
-            episodes_display = episodes.map( (e, index) => 
+            episodes_display = episodes.map((programme, index) => 
                 <Programme
                     key={index} 
-                    info={e} 
+                    programme={programme}
+                    tracks={programme['tracks']} 
                     handleProgrammeClick={this.handleProgrammeClick}>
                 </Programme>
             )
-        }
+            }
+            // {
+            //     if (e['date'] === null) {
+            //         return(
+            //             <Programme
+            //                 key={index} 
+            //                 info={e}
+            //                 tracks={e['tracks']} 
+            //                 handleProgrammeClick={this.handleProgrammeClick}>
+            //             </Programme>
+            //         )
+            //     }
+            // }
+            
+        
 
-        if (programme){
-            episodes_display = <Programme info={programme}> </Programme>
-        }
+        // if (programme){
+        //     episodes_display = <Programme info={programme}> </Programme>
+        // }
 
         
 
@@ -157,6 +181,7 @@ export class Search extends Component {
             <div>
                 {/* {isSearching && <Loader ></Loader>} */}
                 {currentDisplay === 'search' ?
+                <div>
                 <SearchContainer>
                     <div>
                         <SearchInput 
@@ -169,18 +194,26 @@ export class Search extends Component {
                     </div>
                         <h2>{isSearching ? `Searching for ${search_term}...` : "For your favourite BBC DJ."}</h2>
                 </SearchContainer>
+                <SearchResultsContainer>
+                    {search_results_display}
+                </SearchResultsContainer>
+                <EpisodesContainer>
+                    {episodes_display}
+                </EpisodesContainer>
+                </div>
                 : null}
 
-                {currentDisplay === 'search-results'?
+                {/* {currentDisplay === 'search-results'?
+
                 <div>
                     {search_results_display}
-                </div> : null}
+                </div> : null} */}
 
-                {currentDisplay === 'episodes' ?
+                {/* {currentDisplay === 'episodes' ?
                 <div>
                     {episodes_display}
                 </div>
-                : null}
+                : null} */}
             </div>
         )
     }

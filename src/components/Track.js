@@ -11,6 +11,8 @@ const TrackContainer = styled.div`
     align-items: flex-start;
     margin: 5px 0;
     padding: 5px 0;
+    // height: 180px;
+    width: 160px;
 `
 
 const TrackImage = styled.image`
@@ -26,8 +28,8 @@ export class Track extends Component {
         return (
             <TrackContainer>
                 {/* <TrackImage ></TrackImage> */}
-                <span style={{fontSize: '2em'}}>{this.props.artist}</span>
-                <span style={{fontSize: '1.2em'}}>{this.props.title}</span>
+                <span style={{fontSize: 'larger'}}>{this.props.artist}</span>
+                <span style={{fontSize: 'large'}}>{this.props.title}</span>
             </TrackContainer>
         )
     }

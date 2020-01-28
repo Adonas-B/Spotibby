@@ -4,11 +4,17 @@ import styled from 'styled-components'
 const SeriesContainer =styled.div`
     display: flex;
     color: rgb(255,255,255);
-
+    text-align: left;
+    align-items: center;
+    padding-left: 0.8em;
+    padding-right: 0.8em;
+    font-size: larger;
 `
 
 const SeriesImage =styled.img`
-    padding-right: 40px;
+    padding-right: 1em;
+    height: 90px;
+    width: 160px;
 `
 
 export class Series extends Component {
@@ -53,7 +59,7 @@ export class Series extends Component {
         return (
             <SeriesContainer onClick={this.handleClick}>
                 <SeriesImage src={info.programme_image} alt={info.programme_series_name}/>
-                <h1>{info.programme_series_name}</h1>
+                <span>{info.programme_series_name}</span>
             </SeriesContainer>
         )
     }
