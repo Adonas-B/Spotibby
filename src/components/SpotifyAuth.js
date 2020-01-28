@@ -28,28 +28,11 @@ export class SpotifyAuth extends Component {
         super(props);
     }
 
-    handleConnectClick = () => {
-
-        const client_id = '1f044393f8714a7b9b9ab87a4777622c';
-        const response_type = 'code';
-        const redirect_uri = 'http://localhost:3000/';
-        const scope = 'playlist-modify-public%20user-library-read' 
-
-        const request_url = `https://accounts.spotify.com/authorize?client_id=${client_id}&response_type=${response_type}&redirect_uri=${redirect_uri}&scope=${scope}`
-
-        console.log(request_url)
-
-        fetch(request_url , {
-            method: 'GET',
-            mode: 'no-cors'
-        })
-    }
-
     render() {
 
         const client_id = '1f044393f8714a7b9b9ab87a4777622c';
         const response_type = 'code';
-        const redirect_uri = 'http://localhost:3000/';
+        const redirect_uri = 'http://localhost:3000/authorise/';
         const scope = 'playlist-modify-public user-library-read' 
 
         const request_url = `https://accounts.spotify.com/authorize?client_id=${client_id}&response_type=${response_type}&redirect_uri=${redirect_uri}&scope=${scope}`

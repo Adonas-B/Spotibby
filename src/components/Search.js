@@ -106,7 +106,9 @@ export class Search extends Component {
             currentProgramme: null
         })
         
-        fetch(`${this.props.API_URL}/search/${this.state.search_term}`)
+        console.log(`SEARCH API: ${process.env.REACT_APP_API_URL}`)
+
+        fetch(`${process.env.REACT_APP_API_URL}/search/${this.state.search_term}`)
         .then(res => {
             if (res.status !== 200) {
                 console.log('Looks like there was a problem. Status Code: ' +
@@ -204,24 +206,24 @@ export class Search extends Component {
         // }
 
         
-
+        
 
         return (
             <div>
                 {/* {isSearching && <Loader ></Loader>} */}
                 {currentDisplay === 'search' ?
                 <div>
-                <SearchContainer>
-                    <div>
-                        <SearchInput 
-                            autofocus
-                            go={isSearching}
-                            placeholder="Search" 
-                            onChange={this.handleSearchChange}>
-                        </SearchInput>
-                        {!isSearching ? 
-                        <Icon src={search_icon} alt="Search Button" onClick={this.handleSearchClick}/> : null }
-                    </div>
+                    <SearchContainer>
+                        <div>
+                            <SearchInput 
+                                autofocus
+                                go={isSearching}
+                                placeholder="Search" 
+                                onChange={this.handleSearchChange}>
+                            </SearchInput>
+                            {!isSearching ? 
+                            <Icon src={search_icon} alt="Search Button" onClick={this.handleSearchClick}/> : null }
+                        </div>
                         {!search_results ? 
                         <h2>{isSearching ? `Searching for ${search_term}...` : "For your favourite BBC DJ."}</h2> : null }
                 </SearchContainer>
@@ -231,23 +233,10 @@ export class Search extends Component {
                         {search_results_display}
                     </SearchResultsContainer> : null
                 }
-                <EpisodesContainer>
-                    {episodes_display}
-                </EpisodesContainer>
-                </div>
-                : null}
-
-                {/* {currentDisplay === 'search-results'?
-
-                <div>
-                    {search_results_display}
-                </div> : null} */}
-
-                {/* {currentDisplay === 'episodes' ?
-                <div>
-                    {episodes_display}
-                </div>
-                : null} */}
+                    <EpisodesContainer>
+                        {episodes_display}
+                    </EpisodesContainer>
+                </div> : null }
             </div>
         )
     }

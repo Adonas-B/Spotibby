@@ -39,7 +39,9 @@ export class Programme extends Component {
     }
 
     handleAddClick = () => {
-        fetch(`${process.env.REACT_APP_API_URL}/programme/${this.props.programme.programme_id}/add`)
+        let access_token = sessionStorage.getItem('access_token')
+        console.log('ADDING')
+        fetch(`${process.env.REACT_APP_API_URL}/programme/${this.props.programme.programme_id}/add?access_token=${access_token}`)
                 .then(res => {
                     if (res.status !== 200) {
                         console.log('Looks like there was a problem. Status Code: ' +
@@ -108,7 +110,9 @@ export class Programme extends Component {
                 </ProgrammeContainer>
                 {isTracksShown ? 
                 <div>
-                    <span>Tracks Played:</span>
+
+                    <span style={{color: 'white'}}>Tracks Played:</span>
+                    <div onClick={this.handleAddClick} style={{color: 'white'}}>ADD</div>
                     {tracks_display}
                 </div> :
                 null }
