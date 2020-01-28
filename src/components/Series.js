@@ -6,8 +6,8 @@ const SeriesContainer =styled.div`
     color: rgb(255,255,255);
     text-align: left;
     align-items: center;
-    padding-left: 0.8em;
-    padding-right: 0.8em;
+    // padding-left: 0.8em;
+    // padding-right: 0.8em;
     font-size: larger;
 `
 

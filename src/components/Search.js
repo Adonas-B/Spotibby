@@ -18,15 +18,16 @@ const SearchContainer = styled.div`
 const colorFade = keyframes`
     0% {
         border-bottom: solid 8px #f54997;
-        padding-left: 0px;
+        // padding-left: 0px;
     }
     50% {
         border-bottom: solid 8px #1DB954;
-        padding-left: 200px;
+        transform: translateX(20vw);
+        // padding-left: 200px;
     }
     100% {
         border-bottom: solid 8px #f54997;
-        padding-left: 0px;
+        // padding-left: 0px;
     }
 `
 
@@ -35,7 +36,8 @@ const SearchInput = styled.input.attrs({type: 'text', autofocus:'true'})`
     border: none;
     // height: 24px;
     font-size: 48px;
-    width: 300px;
+    max-width: 300px;
+    width: 70vw;
     color: rgba(255, 255,255);
     background-color: rgb(25,20,20);
     border-bottom: solid 8px #f54997;
@@ -51,12 +53,16 @@ const SearchInput = styled.input.attrs({type: 'text', autofocus:'true'})`
 `
 
 const SearchResultsContainer = styled.div`
+      margin-top: 1.5em;
+      padding-bottom: 1.5em;
+      border-bottom: solid 8px rgb(30,215,96);
     //   display: flex;
 `
 
 const EpisodesContainer = styled.div`
       display: flex;
       overflow: auto;
+      
 `
 
 const Icon = styled.img`
@@ -71,7 +77,10 @@ export class Search extends Component {
             currentDisplay: 'search',
             search_term: null,
             search_results: null,
-            search_results_display: []
+            search_results_display: [],
+            episodes: null,
+            programme: null,
+            currentProgramme: null
         }
     }
 
@@ -88,7 +97,11 @@ export class Search extends Component {
     handleSearchClick = () => {
 
         this.setState({
-            isSearching: true
+            isSearching: true,
+            search_results: null,
+            episodes: null,
+            programme: null,
+            currentProgramme: null
         })
         
         fetch(`${this.props.API_URL}/search/${this.state.search_term}`)
@@ -146,15 +159,29 @@ export class Search extends Component {
         } 
 
         if (episodes) {
-            episodes_display = episodes.map((programme, index) => 
+            // episodes_display = episodes.map((programme, index) => 
+            //     <Programme
+            //         key={index} 
+            //         programme={programme}
+            //         tracks={programme['tracks']} 
+            //         handleProgrammeClick={this.handleProgrammeClick}>
+            //     </Programme>
+            // )
+            // }
+
+            let past_episodes = episodes.filter(programme => programme.date === null);
+            episodes_display = past_episodes.map((programme, index) => 
                 <Programme
                     key={index} 
                     programme={programme}
                     tracks={programme['tracks']} 
                     handleProgrammeClick={this.handleProgrammeClick}>
                 </Programme>
-            )
+                )
             }
+                
+            
+            
             // {
             //     if (e['date'] === null) {
             //         return(
@@ -190,13 +217,17 @@ export class Search extends Component {
                             placeholder="Search" 
                             onChange={this.handleSearchChange}>
                         </SearchInput>
-                        <Icon src={search_icon} alt="Search Button" onClick={this.handleSearchClick}/>
+                        {!isSearching ? 
+                        <Icon src={search_icon} alt="Search Button" onClick={this.handleSearchClick}/> : null }
                     </div>
-                        <h2>{isSearching ? `Searching for ${search_term}...` : "For your favourite BBC DJ."}</h2>
+                        {!search_results ? 
+                        <h2>{isSearching ? `Searching for ${search_term}...` : "For your favourite BBC DJ."}</h2> : null }
                 </SearchContainer>
-                <SearchResultsContainer>
-                    {search_results_display}
-                </SearchResultsContainer>
+                {search_results ? 
+                    <SearchResultsContainer>
+                        {search_results_display}
+                    </SearchResultsContainer> : null
+                }
                 <EpisodesContainer>
                     {episodes_display}
                 </EpisodesContainer>
