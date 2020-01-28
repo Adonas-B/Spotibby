@@ -49,7 +49,7 @@ export class Programme extends Component {
     }
 
     handleAddClick = () => {
-        fetch(`${process.env.REACT_APP_API_URL}/programme/${this.props.info.programme_id}/add`)
+        fetch(`${process.env.REACT_APP_API_URL}/programme/${this.props.programme.programme_id}/add`)
                 .then(res => {
                     if (res.status !== 200) {
                         console.log('Looks like there was a problem. Status Code: ' +
@@ -74,7 +74,7 @@ export class Programme extends Component {
             })
         }
         else {
-            fetch(`${process.env.REACT_APP_API_URL}/programme/${this.props.info.programme_id}`)
+            fetch(`${process.env.REACT_APP_API_URL}/programme/${this.props.programme.programme_id}`)
                 .then(res => {
                     if (res.status !== 200) {
                         console.log('Looks like there was a problem. Status Code: ' +
@@ -101,7 +101,7 @@ export class Programme extends Component {
     }
 
     render() {
-        const { info } = this.props
+        const { programme } = this.props
         const { isTracksShown, tracks } = this.state
 
         let tracks_display;
@@ -113,8 +113,8 @@ export class Programme extends Component {
         return (
             <div>
                 <ProgrammeContainer style={{color: 'white'}} onClick={this.handleClick}>
-                    {/* <ProgrammeImage src={info.programme_image} alt=""/> */}
-                    <span>{info.programme_name ? info.programme_name : info.programme_title}</span>
+                    {/* <ProgrammeImage src={programme.programme_image} alt=""/> */}
+                    <span>{programme.programme_name ? programme.programme_name : programme.programme_title}</span>
                 </ProgrammeContainer>
                 {isTracksShown ? 
                 <div>
