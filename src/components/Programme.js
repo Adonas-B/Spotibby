@@ -27,17 +27,7 @@ const ProgrammeImage =styled.img`
     // padding-right: 40px;
 `
 
-const AddButton = styled.div`
-    background-color: black;
-    color: rgb(30,215,96);
-    height: 44px;
-    font-size: larger;
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    border: solid 2px rgb(255,0,146);
-    border-radius: 4px;
-`
+
 
 export class Programme extends Component {
     constructor(props){
@@ -118,7 +108,6 @@ export class Programme extends Component {
                 </ProgrammeContainer>
                 {isTracksShown ? 
                 <div>
-                    <AddButton onClick={this.handleAddClick}>Add</AddButton>
                     <span>Tracks Played:</span>
                     {tracks_display}
                 </div> :

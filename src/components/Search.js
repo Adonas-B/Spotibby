@@ -4,6 +4,7 @@ import search_icon from '../images/baseline_search_white_48dp.png'
 import Loader from './Loader'
 import Series from './Series'
 import Programme from './Programme'
+import SpotifyAuth from './SpotifyAuth'
 
 const SearchContainer = styled.div`
     color: rgb(255,255,255);
@@ -31,9 +32,10 @@ const colorFade = keyframes`
     }
 `
 
-const SearchInput = styled.input.attrs({type: 'text', autofocus:'true'})`
+const SearchInput = styled.textarea.attrs({rows: '1', type: 'text', autofocus:'true'})`
     font-family: 'Alata', sans-serif;
     border: none;
+    padding: 0px;
     // height: 24px;
     font-size: 48px;
     max-width: 300px;
@@ -66,7 +68,7 @@ const EpisodesContainer = styled.div`
 `
 
 const Icon = styled.img`
-    transform: translate(-48px, 12px);
+    transform: translate(10px, -8px);
 `
 
 export class Search extends Component {
@@ -223,6 +225,7 @@ export class Search extends Component {
                         {!search_results ? 
                         <h2>{isSearching ? `Searching for ${search_term}...` : "For your favourite BBC DJ."}</h2> : null }
                 </SearchContainer>
+                <SpotifyAuth></SpotifyAuth>
                 {search_results ? 
                     <SearchResultsContainer>
                         {search_results_display}
