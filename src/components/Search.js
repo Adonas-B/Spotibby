@@ -8,9 +8,6 @@ import SpotifyAuth from './SpotifyAuth'
 
 const SearchContainer = styled.div`
     color: rgb(255,255,255);
-    // padding-top: 45px;
-    // margin-top: 5em;
-    // margin-left: 5em;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -32,7 +29,7 @@ const colorFade = keyframes`
     }
 `
 
-const SearchInput = styled.textarea.attrs({rows: '1', type: 'text', autofocus:'true'})`
+const SearchInput = styled.textarea.attrs({rows: '1', type: 'text', autoFocus:'true'})`
     font-family: 'Alata', sans-serif;
     border: none;
     padding: 0px;
@@ -87,7 +84,6 @@ export class Search extends Component {
     }
 
     componentDidMount(){
-        console.log(this.props.API_URL)
     }
 
     handleSearchChange = (e) => {
@@ -105,8 +101,6 @@ export class Search extends Component {
             programme: null,
             currentProgramme: null
         })
-        
-        console.log(`SEARCH API: ${process.env.REACT_APP_API_URL}`)
 
         fetch(`${process.env.REACT_APP_API_URL}/search/${this.state.search_term}`)
         .then(res => {
@@ -163,16 +157,6 @@ export class Search extends Component {
         } 
 
         if (episodes) {
-            // episodes_display = episodes.map((programme, index) => 
-            //     <Programme
-            //         key={index} 
-            //         programme={programme}
-            //         tracks={programme['tracks']} 
-            //         handleProgrammeClick={this.handleProgrammeClick}>
-            //     </Programme>
-            // )
-            // }
-
             let past_episodes = episodes.filter(programme => programme.date === null);
             episodes_display = past_episodes.map((programme, index) => 
                 <Programme
@@ -183,29 +167,6 @@ export class Search extends Component {
                 </Programme>
                 )
             }
-                
-            
-            
-            // {
-            //     if (e['date'] === null) {
-            //         return(
-            //             <Programme
-            //                 key={index} 
-            //                 info={e}
-            //                 tracks={e['tracks']} 
-            //                 handleProgrammeClick={this.handleProgrammeClick}>
-            //             </Programme>
-            //         )
-            //     }
-            // }
-            
-        
-
-        // if (programme){
-        //     episodes_display = <Programme info={programme}> </Programme>
-        // }
-
-        
         
 
         return (
@@ -216,7 +177,6 @@ export class Search extends Component {
                     <SearchContainer>
                         <div>
                             <SearchInput 
-                                autofocus
                                 go={isSearching}
                                 placeholder="Search" 
                                 onChange={this.handleSearchChange}>
@@ -227,7 +187,6 @@ export class Search extends Component {
                         {!search_results ? 
                         <h2>{isSearching ? `Searching for ${search_term}...` : "For your favourite BBC DJ."}</h2> : null }
                 </SearchContainer>
-                <SpotifyAuth></SpotifyAuth>
                 {search_results ? 
                     <SearchResultsContainer>
                         {search_results_display}
