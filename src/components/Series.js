@@ -6,6 +6,7 @@ const SeriesContainer =styled.div`
     color: rgb(255,255,255);
     text-align: left;
     align-items: center;
+    padding: 0.7em 0;
     // padding-left: 0.8em;
     // padding-right: 0.8em;
     font-size: larger;
@@ -42,7 +43,7 @@ export class Series extends Component {
                     this.setState({
                         episodes: data.episodes,
                     })
-                    this.props.handleEpisodeClick(data.episodes)
+                    this.props.handleEpisodeClick(data.episodes, data.programme_series_id)
                 })
     
             })

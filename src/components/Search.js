@@ -5,6 +5,7 @@ import Loader from './Loader'
 import Series from './Series'
 import Programme from './Programme'
 import SpotifyAuth from './SpotifyAuth'
+import LoaderV2 from './LoaderV2'
 
 const SearchContainer = styled.div`
     color: rgb(255,255,255);
@@ -52,10 +53,9 @@ const SearchInput = styled.textarea.attrs({rows: '1', type: 'text', autoFocus:'t
 `
 
 const SearchResultsContainer = styled.div`
-      margin-top: 1.5em;
-      padding-bottom: 1.5em;
       border-bottom: solid 8px rgb(30,215,96);
-    //   display: flex;
+      border-top: solid 8px rgb(30,215,96);
+      padding: 0.7em 0em;
 `
 
 const EpisodesContainer = styled.div`
@@ -125,10 +125,12 @@ export class Search extends Component {
           })
     }
 
-    handleEpisodeClick = (episodes) => {
+    handleEpisodeClick = (episodes, programme_series_id) => {
+        console.log(`HIIII ${programme_series_id}`)
         this.setState({
+            programme_series_id: programme_series_id,
             episodes: episodes,
-            // currentDisplay: 'episodes'
+            currentDisplay: 'episodes'
         })
     }
 
@@ -143,9 +145,14 @@ export class Search extends Component {
 
 
     render() {
-        const { isSearching, search_results, episodes, currentDisplay, search_term, programme } = this.state
+        const { isSearching, search_results, episodes, currentDisplay, search_term, programme, programme_series_id } = this.state
         let search_results_display;
         let episodes_display;
+        let single_series;
+
+        if (programme_series_id) {
+            single_series = search_results.filter(p_s => p_s.programme_series_id === programme_series_id);
+        }
 
         if (search_results) {
             search_results_display = search_results.map((s_r) => 
@@ -170,10 +177,14 @@ export class Search extends Component {
         
 
         return (
-            <div>
-                {/* {isSearching && <Loader ></Loader>} */}
-                {currentDisplay === 'search' ?
+            <div style={{
+                height: '100vh',
+                padding: '1.5em'
+                }}>
+                {isSearching && <LoaderV2 ></LoaderV2>}
+                
                 <div>
+                    {currentDisplay === 'search' ?
                     <SearchContainer>
                         <div>
                             <SearchInput 
@@ -186,16 +197,19 @@ export class Search extends Component {
                         </div>
                         {!search_results ? 
                         <h2>{isSearching ? `Searching for ${search_term}...` : "For your favourite BBC DJ."}</h2> : null }
+                        {search_results ? 
+                        <h2>{`Results for ${search_term}`}</h2> : null }
                 </SearchContainer>
+                : null }
                 {search_results ? 
                     <SearchResultsContainer>
-                        {search_results_display}
+                        { programme_series_id ? <Series info={single_series[0]} handleEpisodeClick={this.handleEpisodeClick}></Series> : search_results_display }
                     </SearchResultsContainer> : null
                 }
                     <EpisodesContainer>
                         {episodes_display}
                     </EpisodesContainer>
-                </div> : null }
+                </div> 
             </div>
         )
     }
