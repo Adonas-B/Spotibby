@@ -13,9 +13,9 @@ const SeriesContainer =styled.div`
 `
 
 const SeriesImage =styled.img`
-    padding-right: 1em;
+    margin-right: 1em;
     height: 90px;
-    width: 160px;
+    // width: 160px;
 `
 
 export class Series extends Component {

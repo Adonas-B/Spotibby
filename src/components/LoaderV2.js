@@ -49,11 +49,15 @@ const rotateGreen = keyframes`
 
 const Container = styled.div`
     position: fixed;
+    left: 0;
+    top: 0;
     display: flex;
     width: 100vw;
     height: 100vh;
     align-items: center;
     justify-content: center;
+    z-index: 1;
+    background-color: rgba(255,255,255,0.8);
 `
 
 const Circle = styled.div`

@@ -7,6 +7,13 @@ import Programme from './Programme'
 import SpotifyAuth from './SpotifyAuth'
 import LoaderV2 from './LoaderV2'
 
+const AppContainer = styled.div`
+    height: 100vh;
+    padding: 0 2vw;
+    display: flex;
+    // align-items: center;
+`
+
 const SearchContainer = styled.div`
     color: rgb(255,255,255);
     display: flex;
@@ -30,7 +37,7 @@ const colorFade = keyframes`
     }
 `
 
-const SearchInput = styled.textarea.attrs({rows: '1', type: 'text', autoFocus:'true'})`
+const SearchInput = styled.input.attrs({type: 'search', autoFocus:'true'})`
     font-family: 'Alata', sans-serif;
     border: none;
     padding: 0px;
@@ -56,6 +63,7 @@ const SearchResultsContainer = styled.div`
       border-bottom: solid 8px rgb(30,215,96);
       border-top: solid 8px rgb(30,215,96);
       padding: 0.7em 0em;
+      width: 96vw;
 `
 
 const EpisodesContainer = styled.div`
@@ -65,7 +73,7 @@ const EpisodesContainer = styled.div`
 `
 
 const Icon = styled.img`
-    transform: translate(10px, -8px);
+    transform: translate(13px, 13px);
 `
 
 export class Search extends Component {
@@ -126,7 +134,6 @@ export class Search extends Component {
     }
 
     handleEpisodeClick = (episodes, programme_series_id) => {
-        console.log(`HIIII ${programme_series_id}`)
         this.setState({
             programme_series_id: programme_series_id,
             episodes: episodes,
@@ -177,10 +184,7 @@ export class Search extends Component {
         
 
         return (
-            <div style={{
-                height: '100vh',
-                padding: '1.5em'
-                }}>
+            <AppContainer>
                 {isSearching && <LoaderV2 ></LoaderV2>}
                 
                 <div>
@@ -210,7 +214,7 @@ export class Search extends Component {
                         {episodes_display}
                     </EpisodesContainer>
                 </div> 
-            </div>
+            </AppContainer>
         )
     }
 }

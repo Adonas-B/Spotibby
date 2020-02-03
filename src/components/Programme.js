@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Track from './Track'
+import LoaderV2 from './LoaderV2'
 
 const ProgrammeContainer =styled.div`
     display: flex;
@@ -34,13 +35,15 @@ export class Programme extends Component {
         super(props)
         this.state={
             episodes : null,
-            isTracksShown: false
+            isTracksShown: false,
+            isLoading: false,
         }
     }
 
     handleAddClick = () => {
         let access_token = sessionStorage.getItem('access_token')
         console.log('ADDING')
+        this.setState({ isLoading: true })
         fetch(`${process.env.REACT_APP_API_URL}/programme/${this.props.programme.programme_id}/add?access_token=${access_token}`)
                 .then(res => {
                     if (res.status !== 200) {
@@ -51,6 +54,7 @@ export class Programme extends Component {
                     res.json()
                     .then(data =>  {
                         console.log(data)
+                        this.setState({ isLoading: false })
                     })
         
                 })
@@ -94,7 +98,7 @@ export class Programme extends Component {
 
     render() {
         const { programme } = this.props
-        const { isTracksShown, tracks } = this.state
+        const { isTracksShown, tracks, isLoading } = this.state
 
         let tracks_display;
 
@@ -104,6 +108,7 @@ export class Programme extends Component {
 
         return (
             <div>
+                {isLoading && <LoaderV2></LoaderV2>}
                 <ProgrammeContainer style={{color: 'white'}} onClick={this.handleClick}>
                     {/* <ProgrammeImage src={programme.programme_image} alt=""/> */}
                     <span>{programme.programme_name ? programme.programme_name : programme.programme_title}</span>
