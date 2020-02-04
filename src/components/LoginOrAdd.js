@@ -13,7 +13,7 @@ const ButtonContainer = styled.div`
 export default function LoginOrAdd(props) {
     const [hasToken, setHasToken] = useState(false)
     const client_id = '1f044393f8714a7b9b9ab87a4777622c';
-    const redirect_uri = 'http://localhost:3000/success/';
+    const redirect_uri = `${process.env.REACT_APP_URL}/success/`;
     const scopes = 'playlist-modify-public user-library-read';
 
      function onSuccess(response){
