@@ -6,15 +6,16 @@ const SeriesContainer =styled.div`
     color: rgb(255,255,255);
     text-align: left;
     align-items: center;
+    padding: 0.7em 0;
     // padding-left: 0.8em;
     // padding-right: 0.8em;
     font-size: larger;
 `
 
 const SeriesImage =styled.img`
-    padding-right: 1em;
+    margin-right: 1em;
     height: 90px;
-    width: 160px;
+    // width: 160px;
 `
 
 export class Series extends Component {
@@ -42,7 +43,7 @@ export class Series extends Component {
                     this.setState({
                         episodes: data.episodes,
                     })
-                    this.props.handleEpisodeClick(data.episodes)
+                    this.props.handleEpisodeClick(data.episodes, data.programme_series_id)
                 })
     
             })

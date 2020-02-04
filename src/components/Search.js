@@ -1,16 +1,19 @@
 import React, { Component } from 'react'
 import styled, {keyframes} from 'styled-components'
 import search_icon from '../images/baseline_search_white_48dp.png'
-import Loader from './Loader'
 import Series from './Series'
 import Programme from './Programme'
-import SpotifyAuth from './SpotifyAuth'
+import LoaderV2 from './LoaderV2'
+
+const AppContainer = styled.div`
+    height: 92vh;
+    padding: 4vw 4vw;
+    display: flex;
+    // align-items: center;
+`
 
 const SearchContainer = styled.div`
     color: rgb(255,255,255);
-    // padding-top: 45px;
-    // margin-top: 5em;
-    // margin-left: 5em;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -32,7 +35,7 @@ const colorFade = keyframes`
     }
 `
 
-const SearchInput = styled.textarea.attrs({rows: '1', type: 'text', autofocus:'true'})`
+const SearchInput = styled.input.attrs({type: 'search', autoFocus:'true'})`
     font-family: 'Alata', sans-serif;
     border: none;
     padding: 0px;
@@ -55,20 +58,20 @@ const SearchInput = styled.textarea.attrs({rows: '1', type: 'text', autofocus:'t
 `
 
 const SearchResultsContainer = styled.div`
-      margin-top: 1.5em;
-      padding-bottom: 1.5em;
       border-bottom: solid 8px rgb(30,215,96);
-    //   display: flex;
+      border-top: solid 8px rgb(30,215,96);
+      padding: 0.7em 0em;
+      width: 96vw;
 `
 
 const EpisodesContainer = styled.div`
       display: flex;
-      overflow: auto;
+      overflow-x: scroll;
       
 `
 
 const Icon = styled.img`
-    transform: translate(10px, -8px);
+    transform: translate(13px, 13px);
 `
 
 export class Search extends Component {
@@ -87,7 +90,6 @@ export class Search extends Component {
     }
 
     componentDidMount(){
-        console.log(this.props.API_URL)
     }
 
     handleSearchChange = (e) => {
@@ -105,8 +107,6 @@ export class Search extends Component {
             programme: null,
             currentProgramme: null
         })
-        
-        console.log(`SEARCH API: ${process.env.REACT_APP_API_URL}`)
 
         fetch(`${process.env.REACT_APP_API_URL}/search/${this.state.search_term}`)
         .then(res => {
@@ -131,10 +131,11 @@ export class Search extends Component {
           })
     }
 
-    handleEpisodeClick = (episodes) => {
+    handleEpisodeClick = (episodes, programme_series_id) => {
         this.setState({
+            programme_series_id: programme_series_id,
             episodes: episodes,
-            // currentDisplay: 'episodes'
+            currentDisplay: 'episodes'
         })
     }
 
@@ -149,9 +150,14 @@ export class Search extends Component {
 
 
     render() {
-        const { isSearching, search_results, episodes, currentDisplay, search_term, programme } = this.state
+        const { isSearching, search_results, episodes, currentDisplay, search_term, programme_series_id } = this.state
         let search_results_display;
         let episodes_display;
+        let single_series;
+
+        if (programme_series_id) {
+            single_series = search_results.filter(p_s => p_s.programme_series_id === programme_series_id);
+        }
 
         if (search_results) {
             search_results_display = search_results.map((s_r) => 
@@ -163,16 +169,6 @@ export class Search extends Component {
         } 
 
         if (episodes) {
-            // episodes_display = episodes.map((programme, index) => 
-            //     <Programme
-            //         key={index} 
-            //         programme={programme}
-            //         tracks={programme['tracks']} 
-            //         handleProgrammeClick={this.handleProgrammeClick}>
-            //     </Programme>
-            // )
-            // }
-
             let past_episodes = episodes.filter(programme => programme.date === null);
             episodes_display = past_episodes.map((programme, index) => 
                 <Programme
@@ -183,40 +179,17 @@ export class Search extends Component {
                 </Programme>
                 )
             }
-                
-            
-            
-            // {
-            //     if (e['date'] === null) {
-            //         return(
-            //             <Programme
-            //                 key={index} 
-            //                 info={e}
-            //                 tracks={e['tracks']} 
-            //                 handleProgrammeClick={this.handleProgrammeClick}>
-            //             </Programme>
-            //         )
-            //     }
-            // }
-            
-        
-
-        // if (programme){
-        //     episodes_display = <Programme info={programme}> </Programme>
-        // }
-
-        
         
 
         return (
-            <div>
-                {/* {isSearching && <Loader ></Loader>} */}
-                {currentDisplay === 'search' ?
+            <AppContainer>
+                {isSearching && <LoaderV2 ></LoaderV2>}
+                
                 <div>
+                    {currentDisplay === 'search' ?
                     <SearchContainer>
                         <div>
                             <SearchInput 
-                                autofocus
                                 go={isSearching}
                                 placeholder="Search" 
                                 onChange={this.handleSearchChange}>
@@ -226,18 +199,20 @@ export class Search extends Component {
                         </div>
                         {!search_results ? 
                         <h2>{isSearching ? `Searching for ${search_term}...` : "For your favourite BBC DJ."}</h2> : null }
+                        {search_results ? 
+                        <h2>{`Results for ${search_term}`}</h2> : null }
                 </SearchContainer>
-                <SpotifyAuth></SpotifyAuth>
+                : null }
                 {search_results ? 
                     <SearchResultsContainer>
-                        {search_results_display}
+                        { programme_series_id ? <Series info={single_series[0]} handleEpisodeClick={this.handleEpisodeClick}></Series> : search_results_display }
                     </SearchResultsContainer> : null
                 }
                     <EpisodesContainer>
                         {episodes_display}
                     </EpisodesContainer>
-                </div> : null }
-            </div>
+                </div> 
+            </AppContainer>
         )
     }
 }
