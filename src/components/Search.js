@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import styled, {keyframes} from 'styled-components'
 import search_icon from '../images/baseline_search_white_48dp.png'
-import Loader from './Loader'
 import Series from './Series'
 import Programme from './Programme'
-import SpotifyAuth from './SpotifyAuth'
 import LoaderV2 from './LoaderV2'
 
 const AppContainer = styled.div`
@@ -152,7 +150,7 @@ export class Search extends Component {
 
 
     render() {
-        const { isSearching, search_results, episodes, currentDisplay, search_term, programme, programme_series_id } = this.state
+        const { isSearching, search_results, episodes, currentDisplay, search_term, programme_series_id } = this.state
         let search_results_display;
         let episodes_display;
         let single_series;

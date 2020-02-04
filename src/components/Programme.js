@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Track from './Track'
 import LoaderV2 from './LoaderV2'
 import LoginOrAdd from './LoginOrAdd'
+import Cookies from 'js-cookie'
 
 const ProgrammeContainer =styled.div`
     display: flex;
@@ -23,12 +24,11 @@ const ProgrammeContainer =styled.div`
 
 `
 
-const ProgrammeImage =styled.img`
-    // // height: 90px;
-    // width: 160px;
-    // padding-right: 40px;
-`
-
+// const ProgrammeImage =styled.img`
+//     height: 90px;
+//     width: 160px;
+//     padding-right: 40px;
+// `
 
 
 export class Programme extends Component {
@@ -42,7 +42,7 @@ export class Programme extends Component {
     }
 
     handleAddClick = () => {
-        let access_token = sessionStorage.getItem('access_token')
+        let access_token = Cookies.get('access_token')
         console.log('ADDING')
         this.setState({ isLoading: true })
         fetch(`${process.env.REACT_APP_API_URL}/programme/${this.props.programme.programme_id}/add?access_token=${access_token}`)
@@ -118,7 +118,7 @@ export class Programme extends Component {
                 <div>
 
                     <span style={{color: 'white'}}>Tracks Played:</span>
-                    <LoginOrAdd addFunction={this.handleAddClick}></LoginOrAdd>
+                    <LoginOrAdd handleAddClick={this.handleAddClick}></LoginOrAdd>
                     {tracks_display}
                 </div> :
                 null }

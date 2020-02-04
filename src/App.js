@@ -5,11 +5,7 @@ import {
   Route,
 } from "react-router-dom";
 import './App.css';
-import Loader from './components/Loader';
 import Search from './components/Search';
-import Spotify from './components/Spotify';
-import LoaderV2 from './components/LoaderV2';
-import LoginOrAdd from './components/LoginOrAdd';
 
 const API_URL = process.env.REACT_APP_API_URL
 
@@ -24,7 +20,7 @@ function App() {
     
       <Router>
         <Switch>
-            <Route path='/login/' component={Spotify} />
+            <Route path='/login/' />
             <Route path=''>
               <Search className="App"> API_URL={API_URL}></Search>
             </Route>

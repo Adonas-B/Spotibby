@@ -32,13 +32,14 @@ export default function LoginOrAdd(props) {
     }
 
     useEffect(() => {
-        Cookies.get('access_token') ? setHasToken(true) : setHasToken(false)
+        if (Cookies.get('access_token')) {
+            setHasToken(true)
         }
-    )
+    }, [hasToken])
     return (
         <ButtonContainer>
             {hasToken ?  
-            <div className="Connect" >
+            <div className="Connect" onClick={handleAddClick}>
                 <span>ADD</span>
             </div> 
             :

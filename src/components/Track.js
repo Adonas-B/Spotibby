@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 
@@ -15,24 +15,22 @@ const TrackContainer = styled.div`
     width: 160px;
 `
 
-const TrackImage = styled.image`
-    height: 88px;
-    widgth: 88px;
-`
+// const TrackImage = styled.image`
+//     height: 88px;
+//     widgth: 88px;
+// `
 
-export class Track extends Component {
-    constructor(props){
-        super(props)
-    }
-    render() {
-        return (
+
+export default function Track(props) {
+    return (
+        <div>
             <TrackContainer>
                 {/* <TrackImage ></TrackImage> */}
-                <span style={{fontSize: 'larger'}}>{this.props.artist}</span>
-                <span style={{fontSize: 'large'}}>{this.props.title}</span>
+                <span style={{fontSize: 'larger'}}>{props.artist}</span>
+                <span style={{fontSize: 'large'}}>{props.title}</span>
             </TrackContainer>
-        )
-    }
+        </div>
+    )
 }
 
-export default Track
+
