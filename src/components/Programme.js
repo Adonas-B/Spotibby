@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Track from './Track'
 import LoaderV2 from './LoaderV2'
+import LoginOrAdd from './LoginOrAdd'
 
 const ProgrammeContainer =styled.div`
     display: flex;
@@ -117,7 +118,7 @@ export class Programme extends Component {
                 <div>
 
                     <span style={{color: 'white'}}>Tracks Played:</span>
-                    <div onClick={this.handleAddClick} style={{color: 'white'}}>ADD</div>
+                    <LoginOrAdd addFunction={this.handleAddClick}></LoginOrAdd>
                     {tracks_display}
                 </div> :
                 null }

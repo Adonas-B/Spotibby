@@ -8,8 +8,8 @@ import SpotifyAuth from './SpotifyAuth'
 import LoaderV2 from './LoaderV2'
 
 const AppContainer = styled.div`
-    height: 100vh;
-    padding: 0 2vw;
+    height: 92vh;
+    padding: 4vw 4vw;
     display: flex;
     // align-items: center;
 `
@@ -68,7 +68,7 @@ const SearchResultsContainer = styled.div`
 
 const EpisodesContainer = styled.div`
       display: flex;
-      overflow: auto;
+      overflow-x: scroll;
       
 `
 
