@@ -1,22 +1,6 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
+import { SeriesContainer, SeriesImage } from './Series.style'
 
-const SeriesContainer =styled.div`
-    display: flex;
-    color: rgb(255,255,255);
-    text-align: left;
-    align-items: center;
-    padding: 0.7em 0;
-    // padding-left: 0.8em;
-    // padding-right: 0.8em;
-    font-size: larger;
-`
-
-const SeriesImage =styled.img`
-    margin-right: 1em;
-    height: 90px;
-    // width: 160px;
-`
 
 export class Series extends Component {
     constructor(props){
@@ -27,9 +11,6 @@ export class Series extends Component {
     }
 
     handleClick = () => {
-        
-        console.log(this.props.info.programme_series_id)
-        console.log(`${process.env.REACT_APP_API_URL}/episodes/${this.props.info.programme_series_id}`)
         fetch(`${process.env.REACT_APP_API_URL}/episodes/${this.props.info.programme_series_id}`)
             .then(res => {
                 if (res.status !== 200) {

@@ -5,7 +5,7 @@ import {
   Route,
 } from "react-router-dom";
 import './App.css';
-import Search from './components/Search';
+import Search from './components/Search/Search';
 
 const API_URL = process.env.REACT_APP_API_URL
 

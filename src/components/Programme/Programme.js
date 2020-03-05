@@ -1,35 +1,9 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
-import Track from './Track'
-import LoaderV2 from './LoaderV2'
-import LoginOrAdd from './LoginOrAdd'
+import Track from '../Track/Track'
+import LoaderV2 from '../Loader/LoaderV2'
+import LoginOrAdd from '../LoginOrAdd/LoginOrAdd'
 import Cookies from 'js-cookie'
-
-const ProgrammeContainer =styled.div`
-    display: flex;
-    align-items: center;
-    color: rgb(255,255,255);
-    height: 180px;
-    width: 160px;
-    // border: solid 1px white;
-    padding-left: 0.4em;
-    padding-right: 0.4em;
-    margin-top: 1em;
-    margin-bottom: 1em;
-    font-size: larger;
-    text-align: left;
-    border-right: 3px solid rgb(255,0,146);
-    // border-top: 2px solid rgb(255,0,146);
-    border-left: 3px solid rgb(30,215,96);
-
-`
-
-// const ProgrammeImage =styled.img`
-//     height: 90px;
-//     width: 160px;
-//     padding-right: 40px;
-// `
-
+import { ProgrammeContainer } from './Programme.style'
 
 export class Programme extends Component {
     constructor(props){
