@@ -4,7 +4,6 @@ import search_icon from '../images/baseline_search_white_48dp.png'
 import Series from './Series'
 import Programme from './Programme'
 import LoaderV2 from './LoaderV2'
-import LoginOrAdd from './LoginOrAdd'
 
 const AppContainer = styled.div`
     height: 92vh;
@@ -189,7 +188,6 @@ export class Search extends Component {
                 <div>
                     {currentDisplay === 'search' ?
                     <SearchContainer>
-                        <LoginOrAdd></LoginOrAdd>
                         <div>
                             <SearchInput 
                                 go={isSearching}
