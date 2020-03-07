@@ -56,7 +56,7 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     z-index: 1;
-    background-color: rgba(255,255,255,0.8);
+    background-color: rgba(0,0,0,0.8);
 `
 
 const Circle = styled.div`
@@ -66,6 +66,7 @@ const Circle = styled.div`
     // left: 50%;
     // top: 50%;
     border-radius: 50%;
+    box-shadow: 0px 0px 40px 5px rgba(255,255,255,0.65);
 `
 
 const CircleGreen = styled(Circle)`

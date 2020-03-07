@@ -19,6 +19,7 @@ export class Search extends Component {
             programme: null,
             currentProgramme: null
         }
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount(){
@@ -29,9 +30,15 @@ export class Search extends Component {
             search_term: e.target.value
         })
     }
-    
-    handleSearchClick = () => {
 
+    handleSubmit(event) {
+        console.log('handleSubmit');
+        event.preventDefault();
+    }
+    
+    handleSearchClick = (event) => {
+        console.log('Searching')
+        event.preventDefault();
         this.setState({
             isSearching: true,
             search_results: null,
@@ -102,7 +109,7 @@ export class Search extends Component {
 
         if (episodes) {
             let past_episodes = episodes.filter(programme => programme.date === null);
-            episodes_display = past_episodes.map((programme, index) => 
+            episodes_display = past_episodes.map((programme, index) =>
                 <Programme
                     key={index} 
                     programme={programme}
@@ -121,13 +128,16 @@ export class Search extends Component {
                     {currentDisplay === 'search' ?
                     <SearchContainer>
                         <div>
+                            <form>
                             <SearchInput 
                                 go={isSearching}
                                 placeholder="Search" 
                                 onChange={this.handleSearchChange}>
                             </SearchInput>
                             {!isSearching ? 
-                            <Icon src={search_icon} alt="Search Button" onClick={this.handleSearchClick}/> : null }
+                            <Icon type="image" alt="Search Button" src={search_icon} onClick={this.handleSearchClick}/> : null 
+    }
+                            </form>
                         </div>
                         {!search_results ? 
                         <h2>{isSearching ? `Searching for ${search_term}...` : "For your favourite BBC DJ."}</h2> : null }
@@ -141,7 +151,9 @@ export class Search extends Component {
                     </SearchResultsContainer> : null
                 }
                     <EpisodesContainer>
-                        {episodes_display}
+                        <>
+                        {episodes_display}       
+                        </>
                     </EpisodesContainer>
                 </div> 
             </AppContainer>

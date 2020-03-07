@@ -65,7 +65,7 @@ const EpisodesContainer = styled.div`
       
 `
 
-const Icon = styled.img`
+const Icon = styled.input.attrs({type: 'image'})`
     transform: translate(13px, 13px);
 `
 
