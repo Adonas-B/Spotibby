@@ -29,7 +29,7 @@ export class Programme extends Component {
                     res.json()
                     .then(data =>  {
                         console.log(data)
-                        this.setState({ isLoading: false })
+                        this.setState({ isLoading: false, spotifyPlaylistId: data.spotify_playlist_id })
                     })
         
                 })
@@ -73,7 +73,7 @@ export class Programme extends Component {
 
     render() {
         const { programme } = this.props
-        const { isTracksShown, tracks, isLoading } = this.state
+        const { isTracksShown, tracks, isLoading, spotifyPlaylistId } = this.state
 
         let tracks_display;
 
@@ -91,8 +91,8 @@ export class Programme extends Component {
                 {isTracksShown ? 
                 <div>
 
+                    <LoginOrAdd handleAddClick={this.handleAddClick} spotifyPlaylistId={spotifyPlaylistId}></LoginOrAdd>
                     <span style={{color: 'white'}}>Tracks Played:</span>
-                    <LoginOrAdd handleAddClick={this.handleAddClick}></LoginOrAdd>
                     {tracks_display}
                 </div> :
                 null }

@@ -16,6 +16,8 @@ export default function LoginOrAdd(props) {
     const redirect_uri = 'http://localhost:3000/success/';
     const scopes = 'playlist-modify-public user-library-read';
 
+    const { handleAddClick, spotifyPlaylistId } = props
+
      function onSuccess(response){
         console.log(response);
         const inOneHour = 1/24
@@ -27,8 +29,8 @@ export default function LoginOrAdd(props) {
         console.error(response);
     }
 
-    function handleAddClick() {
-        props.handleAddClick()
+    function addToSpotify() {
+        handleAddClick()
     }
 
     useEffect(() => {
@@ -39,8 +41,8 @@ export default function LoginOrAdd(props) {
     return (
         <ButtonContainer>
             {hasToken ?  
-            <div className="Connect" onClick={handleAddClick}>
-                <span>ADD</span>
+            <div className="Connect" onClick={addToSpotify}>
+                <span>{spotifyPlaylistId ? "Added" : "Add"}</span>
             </div> 
             :
             <SpotifyLogin

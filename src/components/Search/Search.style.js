@@ -4,7 +4,9 @@ const AppContainer = styled.div`
     height: 92vh;
     padding: 4vw 4vw;
     display: flex;
+    // overflow-x: hidden;
     // align-items: center;
+    // justify-content: center;
 `
 
 const SearchContainer = styled.div`
@@ -61,8 +63,8 @@ const SearchResultsContainer = styled.div`
 
 const EpisodesContainer = styled.div`
       display: flex;
-      overflow-x: scroll;
-      
+      overflow-x: auto;
+
 `
 
 const Icon = styled.input.attrs({type: 'image'})`

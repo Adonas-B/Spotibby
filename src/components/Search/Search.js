@@ -15,7 +15,7 @@ export class Search extends Component {
             search_term: null,
             search_results: null,
             search_results_display: [],
-            episodes: null,
+            episodes: [],
             programme: null,
             currentProgramme: null
         }
@@ -65,8 +65,11 @@ export class Search extends Component {
             })
 
         })
-        .catch(function(err) {
+        .catch(err => {
             console.log('Fetch Error :-S', err);
+            this.setState({
+                isSearching: false
+            });
           })
     }
 
@@ -150,12 +153,13 @@ export class Search extends Component {
                         { programme_series_id ? <Series info={single_series[0]} handleEpisodeClick={this.handleEpisodeClick}></Series> : search_results_display }
                     </SearchResultsContainer> : null
                 }
-                    <EpisodesContainer>
-                        <>
+                {episodes ?
+                    <EpisodesContainer style={{minWidth: '100%'}}>
                         {episodes_display}       
-                        </>
-                    </EpisodesContainer>
-                </div> 
+                    </EpisodesContainer> : null
+                }
+                
+                </div>
             </AppContainer>
         )
     }
