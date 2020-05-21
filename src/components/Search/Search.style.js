@@ -32,7 +32,7 @@ const colorFade = keyframes`
     }
 `
 
-const SearchInput = styled.input.attrs({type: 'search', autoFocus:'true'})`
+const SearchInput = styled.input.attrs({type: 'search', autoFocus: true })`
     font-family: 'Alata', sans-serif;
     border: none;
     padding: 0px;
@@ -58,7 +58,7 @@ const SearchResultsContainer = styled.div`
       border-bottom: solid 8px rgb(30,215,96);
       border-top: solid 8px rgb(30,215,96);
       padding: 0.7em 0em;
-      width: 96vw;
+      width: 92vw;
 `
 
 const EpisodesContainer = styled.div`

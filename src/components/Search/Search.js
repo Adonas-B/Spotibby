@@ -23,6 +23,13 @@ export class Search extends Component {
     }
 
     componentDidMount(){
+        let session_search_results = sessionStorage.getItem('search_results')
+        let session_search_term = sessionStorage.getItem('search_term')
+        session_search_results = JSON.parse(session_search_results)
+        this.setState({ 
+            search_results: session_search_results,
+            search_term: session_search_term
+         })
     }
 
     handleSearchChange = (e) => {
@@ -56,7 +63,9 @@ export class Search extends Component {
               }
             res.json()
             .then(data =>  {
-                console.log(data)
+                // console.log(data)
+                sessionStorage.setItem('search_results', JSON.stringify(data.search_results))
+                sessionStorage.setItem('search_term', this.state.search_term)
                 this.setState({
                     search_results: data.search_results,
                     // currentDisplay: 'search-results',
