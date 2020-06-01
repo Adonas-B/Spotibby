@@ -8,14 +8,15 @@ const ButtonContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    
 `
 
 export default function LoginOrAdd(props) {
     const [hasToken, setHasToken] = useState(false)
     const client_id = '1f044393f8714a7b9b9ab87a4777622c';
-    const redirect_uri = `${process.env.REACT_APP_URL}/success/`;
+    const redirect_uri = 'http://localhost:3000/success/';
     const scopes = 'playlist-modify-public user-library-read';
+
+    const { handleAddClick, spotifyPlaylistId } = props
 
      function onSuccess(response){
         console.log(response);
@@ -28,8 +29,8 @@ export default function LoginOrAdd(props) {
         console.error(response);
     }
 
-    function handleAddClick() {
-        props.handleAddClick()
+    function addToSpotify() {
+        handleAddClick()
     }
 
     useEffect(() => {
@@ -40,8 +41,8 @@ export default function LoginOrAdd(props) {
     return (
         <ButtonContainer>
             {hasToken ?  
-            <div className="Connect" onClick={handleAddClick}>
-                <span>ADD</span>
+            <div className="Connect" onClick={addToSpotify}>
+                <span>{spotifyPlaylistId ? "Added" : "Add"}</span>
             </div> 
             :
             <SpotifyLogin

@@ -1,79 +1,10 @@
 import React, { Component } from 'react'
-import styled, {keyframes} from 'styled-components'
-import search_icon from '../images/baseline_search_white_48dp.png'
-import Series from './Series'
-import Programme from './Programme'
-import LoaderV2 from './LoaderV2'
-import LoginOrAdd from './LoginOrAdd'
+import search_icon from '../../images/baseline_search_white_48dp.png'
+import Series from '../Series/Series'
+import Programme from '../Programme/Programme'
+import LoaderV2 from '../Loader/LoaderV2'
+import { SearchContainer, SearchInput, SearchResultsContainer, EpisodesContainer, Icon, AppContainer} from './Search.style'
 
-const AppContainer = styled.div`
-    height: 92vh;
-    padding: 4vw 4vw;
-    display: flex;
-    // align-items: center;
-`
-
-const SearchContainer = styled.div`
-    color: rgb(255,255,255);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-`
-
-const colorFade = keyframes`
-    0% {
-        border-bottom: solid 8px #f54997;
-        // padding-left: 0px;
-    }
-    50% {
-        border-bottom: solid 8px #1DB954;
-        transform: translateX(20vw);
-        // padding-left: 200px;
-    }
-    100% {
-        border-bottom: solid 8px #f54997;
-        // padding-left: 0px;
-    }
-`
-
-const SearchInput = styled.input.attrs({type: 'search', autoFocus:'true'})`
-    font-family: 'Alata', sans-serif;
-    border: none;
-    padding: 0px;
-    // height: 24px;
-    font-size: 48px;
-    max-width: 300px;
-    width: 70vw;
-    color: rgba(255, 255,255);
-    background-color: rgb(25,20,20);
-    border-bottom: solid 8px #f54997;
-    animation: ${props => props.go ? colorFade : ""} 3s linear infinite;
-    :focus {
-        outline: none;
-    }
-    ::-webkit-input-placeholder {
-        font-family: 'Alata', sans-serif;
-        color: rgba(210,210,210);
-        // background-color: rgb(0,0,0);
-      }
-`
-
-const SearchResultsContainer = styled.div`
-      border-bottom: solid 8px rgb(30,215,96);
-      border-top: solid 8px rgb(30,215,96);
-      padding: 0.7em 0em;
-      width: 96vw;
-`
-
-const EpisodesContainer = styled.div`
-      display: flex;
-      overflow-x: scroll;
-      
-`
-
-const Icon = styled.img`
-    transform: translate(13px, 13px);
-`
 
 export class Search extends Component {
     constructor(props){
@@ -84,13 +15,21 @@ export class Search extends Component {
             search_term: null,
             search_results: null,
             search_results_display: [],
-            episodes: null,
+            episodes: [],
             programme: null,
             currentProgramme: null
         }
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount(){
+        let session_search_results = sessionStorage.getItem('search_results')
+        let session_search_term = sessionStorage.getItem('search_term')
+        session_search_results = JSON.parse(session_search_results)
+        this.setState({ 
+            search_results: session_search_results,
+            search_term: session_search_term
+         })
     }
 
     handleSearchChange = (e) => {
@@ -98,9 +37,15 @@ export class Search extends Component {
             search_term: e.target.value
         })
     }
-    
-    handleSearchClick = () => {
 
+    handleSubmit(event) {
+        console.log('handleSubmit');
+        event.preventDefault();
+    }
+    
+    handleSearchClick = (event) => {
+        console.log('Searching')
+        event.preventDefault();
         this.setState({
             isSearching: true,
             search_results: null,
@@ -118,7 +63,9 @@ export class Search extends Component {
               }
             res.json()
             .then(data =>  {
-                console.log(data)
+                // console.log(data)
+                sessionStorage.setItem('search_results', JSON.stringify(data.search_results))
+                sessionStorage.setItem('search_term', this.state.search_term)
                 this.setState({
                     search_results: data.search_results,
                     // currentDisplay: 'search-results',
@@ -127,8 +74,11 @@ export class Search extends Component {
             })
 
         })
-        .catch(function(err) {
+        .catch(err => {
             console.log('Fetch Error :-S', err);
+            this.setState({
+                isSearching: false
+            });
           })
     }
 
@@ -171,7 +121,7 @@ export class Search extends Component {
 
         if (episodes) {
             let past_episodes = episodes.filter(programme => programme.date === null);
-            episodes_display = past_episodes.map((programme, index) => 
+            episodes_display = past_episodes.map((programme, index) =>
                 <Programme
                     key={index} 
                     programme={programme}
@@ -189,15 +139,17 @@ export class Search extends Component {
                 <div>
                     {currentDisplay === 'search' ?
                     <SearchContainer>
-                        <LoginOrAdd></LoginOrAdd>
                         <div>
+                            <form>
                             <SearchInput 
                                 go={isSearching}
                                 placeholder="Search" 
                                 onChange={this.handleSearchChange}>
                             </SearchInput>
                             {!isSearching ? 
-                            <Icon src={search_icon} alt="Search Button" onClick={this.handleSearchClick}/> : null }
+                            <Icon type="image" alt="Search Button" src={search_icon} onClick={this.handleSearchClick}/> : null 
+    }
+                            </form>
                         </div>
                         {!search_results ? 
                         <h2>{isSearching ? `Searching for ${search_term}...` : "For your favourite BBC DJ."}</h2> : null }
@@ -210,10 +162,13 @@ export class Search extends Component {
                         { programme_series_id ? <Series info={single_series[0]} handleEpisodeClick={this.handleEpisodeClick}></Series> : search_results_display }
                     </SearchResultsContainer> : null
                 }
-                    <EpisodesContainer>
-                        {episodes_display}
-                    </EpisodesContainer>
-                </div> 
+                {episodes ?
+                    <EpisodesContainer style={{minWidth: '100%'}}>
+                        {episodes_display}       
+                    </EpisodesContainer> : null
+                }
+                
+                </div>
             </AppContainer>
         )
     }

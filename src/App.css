@@ -1,6 +1,7 @@
 .App {
   height: 100vh;
-  padding: 1em;
+  width: 100vw;
+  /* padding: 1em; */
 }
 
 .Connect {
