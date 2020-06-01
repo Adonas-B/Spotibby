@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Cookies from 'js-cookie'
 import SpotifyLogin from 'react-spotify-login';
 
+const APP_URL = process.env.REACT_APP_URL
 
 const ButtonContainer = styled.div`
     display: flex;
@@ -13,7 +14,7 @@ const ButtonContainer = styled.div`
 export default function LoginOrAdd(props) {
     const [hasToken, setHasToken] = useState(false)
     const client_id = '1f044393f8714a7b9b9ab87a4777622c';
-    const redirect_uri = 'http://localhost:3000/success/';
+    const redirect_uri = `${APP_URL}`;
     const scopes = 'playlist-modify-public user-library-read';
 
     const { handleAddClick, spotifyPlaylistId } = props
@@ -38,6 +39,7 @@ export default function LoginOrAdd(props) {
             setHasToken(true)
         }
     }, [hasToken])
+
     return (
         <ButtonContainer>
             {hasToken ?  
