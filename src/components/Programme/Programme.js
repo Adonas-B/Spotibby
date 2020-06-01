@@ -45,6 +45,7 @@ export class Programme extends Component {
             })
         }
         else {
+            this.setState({ isLoading: true })
             fetch(`${process.env.REACT_APP_API_URL}/programme/${this.props.programme.programme_id}`)
                 .then(res => {
                     if (res.status !== 200) {
@@ -58,7 +59,8 @@ export class Programme extends Component {
                         this.setState({
                             episodes: data,
                             tracks: data['tracks'],
-                            isTracksShown : this.state.isTracksShown ? false : true
+                            isTracksShown : this.state.isTracksShown ? false : true,
+                            isLoading: false
                         })
                         this.props.handleProgrammeClick(data)
                     })
@@ -84,7 +86,7 @@ export class Programme extends Component {
         return (
             <div>
                 {isLoading && <LoaderV2></LoaderV2>}
-                <ProgrammeContainer style={{color: 'white'}} onClick={this.handleClick}>
+                <ProgrammeContainer style={{color: 'white'}} full={isTracksShown} onClick={this.handleClick}>
                     {/* <ProgrammeImage src={programme.programme_image} alt=""/> */}
                     <span>{programme.programme_name ? programme.programme_name : programme.programme_title}</span>
                 </ProgrammeContainer>

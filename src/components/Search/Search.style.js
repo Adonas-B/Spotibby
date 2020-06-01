@@ -1,9 +1,9 @@
 import styled, { keyframes } from 'styled-components'
 
 const AppContainer = styled.div`
-    height: 92vh;
-    padding: 4vw 4vw;
-    display: flex;
+    // height: 92vh;
+    // padding: 4vw 4vw;
+    // display: flex;
     // overflow-x: hidden;
     // align-items: center;
     // justify-content: center;
@@ -58,7 +58,7 @@ const SearchResultsContainer = styled.div`
       border-bottom: solid 8px rgb(30,215,96);
       border-top: solid 8px rgb(30,215,96);
       padding: 0.7em 0em;
-      width: 92vw;
+    //   width: 92vw;
 `
 
 const EpisodesContainer = styled.div`

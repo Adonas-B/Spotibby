@@ -5,7 +5,7 @@ const ProgrammeContainer =styled.div`
     align-items: center;
     color: rgb(255,255,255);
     height: 180px;
-    width: 160px;
+    width: ${props => props.full ? '92vw' : '160px'};
     // border: solid 1px white;
     padding-left: 0.4em;
     padding-right: 0.4em;
