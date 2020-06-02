@@ -7,16 +7,14 @@ import {
 import './App.css';
 import Search from './components/Search/Search';
 
-const API_URL = process.env.REACT_APP_API_URL
-
 function App() {
   return (
-    
       <Router>
         <Switch>
-            <Route path='/login/' />
-            <Route path=''>
-              <Search className="App"> API_URL={API_URL}</Search>
+            <Route path='' render={({location}) => (
+              <Search className="App" location={location}></Search>
+            )
+            }>
             </Route>
         </Switch>
       </Router>

@@ -4,7 +4,9 @@ import Series from '../Series/Series'
 import Programme from '../Programme/Programme'
 import LoaderV2 from '../Loader/LoaderV2'
 import { SearchContainer, SearchInput, SearchResultsContainer, EpisodesContainer, Icon, AppContainer} from './Search.style'
-
+import { get_access_token } from '../../helpers/QueryParams'
+import Cookies from 'js-cookie'
+import { withRouter } from 'react-router-dom';
 
 export class Search extends Component {
     constructor(props){
@@ -23,6 +25,11 @@ export class Search extends Component {
     }
 
     componentDidMount(){
+        if (this.props.location.pathname.match('success') 
+            && Cookies.get('access_token') === undefined) {
+            get_access_token(this.props.location.hash)
+            this.props.history.push('/')
+        }
         let session_search_results = sessionStorage.getItem('search_results')
         let session_search_term = sessionStorage.getItem('search_term')
         session_search_results = JSON.parse(session_search_results)
@@ -101,10 +108,17 @@ export class Search extends Component {
 
 
     render() {
-        const { isSearching, search_results, episodes, currentDisplay, search_term, programme_series_id } = this.state
+        const { isSearching, 
+                search_results, 
+                episodes, 
+                currentDisplay, 
+                search_term, 
+                programme_series_id } = this.state
         let search_results_display;
         let episodes_display;
         let single_series;
+
+        
 
         if (programme_series_id) {
             single_series = search_results.filter(p_s => p_s.programme_series_id === programme_series_id);
@@ -174,4 +188,4 @@ export class Search extends Component {
     }
 }
 
-export default Search
+export default withRouter(Search);

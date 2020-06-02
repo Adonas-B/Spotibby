@@ -15,5 +15,6 @@
   background-color: rgb(25,20,20);
   border: 0.2em solid #1DB954;
   border-radius: 1em;
-  font-family: 'Alata'
+  font-family: 'Alata';
+  text-decoration: none;
 }

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Cookies from 'js-cookie'
-import SpotifyLogin from 'react-spotify-login';
 
 const REACT_APP_URL = process.env.REACT_APP_URL
 
@@ -19,17 +18,6 @@ export default function LoginOrAdd(props) {
 
     const { handleAddClick, spotifyPlaylistId } = props
 
-     function onSuccess(response){
-        console.log(response);
-        const inOneHour = 1/24
-        Cookies.set('access_token', response['access_token'], { expires: inOneHour})
-        setHasToken(true)
-    }
-    
-    function onFailure(response) {
-        console.error(response);
-    }
-
     function addToSpotify() {
         handleAddClick()
     }
@@ -40,6 +28,12 @@ export default function LoginOrAdd(props) {
         }
     }, [hasToken])
 
+    const spotify_authorise_url = `https://accounts.spotify.com/authorize?` 
+                                    + `client_id=${client_id}` 
+                                    + `&redirect_uri=${redirect_uri}`
+                                    + `&scope=${scopes}`
+                                    + `&response_type=token`
+
     return (
         <ButtonContainer>
             {hasToken ?  
@@ -47,14 +41,8 @@ export default function LoginOrAdd(props) {
                 <span>{spotifyPlaylistId ? "Added" : "Add"}</span>
             </div> 
             :
-            <SpotifyLogin
-                className="Connect" 
-                clientId={client_id}
-                redirectUri={redirect_uri}
-                onSuccess={onSuccess}
-                onFailure={onFailure}
-                scope={scopes}/>
-            }
+            <a className='Connect' href={spotify_authorise_url}>Connect Spotify</a>
+        }
         </ButtonContainer>
     )
 }
