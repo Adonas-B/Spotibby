@@ -17,7 +17,6 @@ export class Programme extends Component {
 
     handleAddClick = () => {
         let access_token = Cookies.get('access_token')
-        console.log('ADDING')
         this.setState({ isLoading: true })
         fetch(`${process.env.REACT_APP_API_URL}/programme/${this.props.programme.programme_id}/add?access_token=${access_token}`)
                 .then(res => {
@@ -88,6 +87,7 @@ export class Programme extends Component {
                 {isLoading && <LoaderV2></LoaderV2>}
                 <ProgrammeContainer style={{color: 'white'}} full={isTracksShown} onClick={this.handleClick}>
                     {/* <ProgrammeImage src={programme.programme_image} alt=""/> */}
+
                     <span>{programme.programme_name ? programme.programme_name : programme.programme_title}</span>
                 </ProgrammeContainer>
                 {isTracksShown ? 
