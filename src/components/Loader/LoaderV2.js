@@ -1,5 +1,5 @@
-import React from 'react'
-import styled, { keyframes } from 'styled-components'
+import React from 'react';
+import styled, { keyframes } from 'styled-components';
 
 const rotatePink = keyframes`
   0% {
@@ -47,46 +47,54 @@ const rotateGreen = keyframes`
 `;
 
 const Container = styled.div`
-    position: fixed;
-    left: 0;
-    top: 0;
-    display: flex;
-    width: 100%;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
-    z-index: 1;
-    background-color: rgba(0,0,0,0.8);
-`
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.8);
+`;
 
 const Circle = styled.div`
-    position: absolute;
-    height: 4em;
-    width: 4em;
-    // left: 50%;
-    // top: 50%;
-    border-radius: 50%;
-    box-shadow: 0px 0px 40px 5px rgba(255,255,255,0.65);
-`
+  position: absolute;
+  height: 4em;
+  width: 4em;
+  // left: 50%;
+  // top: 50%;
+  border-radius: 50%;
+  box-shadow: 0px 0px 40px 5px rgba(255, 255, 255, 0.65);
+`;
 
 const CircleGreen = styled(Circle)`
-    border: ridge 3em rgb(30, 215, 96);
-    background: linear-gradient(135deg, rgb(30, 215, 96) 50%, rgb(49, 120, 45) 50%);
-    animation: ${rotateGreen} 6s linear infinite;
-`
+  border: ridge 3em rgb(30, 215, 96);
+  background: linear-gradient(
+    135deg,
+    rgb(30, 215, 96) 50%,
+    rgb(49, 120, 45) 50%
+  );
+  animation: ${rotateGreen} 6s linear infinite;
+`;
 const CirclePink = styled(Circle)`
-    border: groove 3em rgb(243, 64, 140);
-    background: linear-gradient(135deg, rgb(172, 0, 88) 50%, rgb(243, 64, 140) 50%);
-    animation: ${rotatePink} 6s linear infinite;
-`
+  border: groove 3em rgb(243, 64, 140);
+  background: linear-gradient(
+    135deg,
+    rgb(172, 0, 88) 50%,
+    rgb(243, 64, 140) 50%
+  );
+  animation: ${rotatePink} 6s linear infinite;
+`;
 
 function LoaderV2() {
-    return (
-        <Container>
-            <CircleGreen></CircleGreen>
-            <CirclePink></CirclePink>
-        </Container>
-    )
+  return (
+    <Container>
+      <CircleGreen></CircleGreen>
+      <CirclePink></CirclePink>
+    </Container>
+  );
 }
 
-export default LoaderV2
+export default LoaderV2;
