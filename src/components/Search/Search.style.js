@@ -63,6 +63,7 @@ const SearchResultsContainer = styled.div`
 
 const EpisodesContainer = styled.div`
       display: flex;
+      scroll-snap-type: x mandatory;
       overflow-x: auto;
 
 `

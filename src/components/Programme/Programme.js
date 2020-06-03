@@ -83,7 +83,7 @@ export class Programme extends Component {
         }
 
         return (
-            <div>
+            <div style={{scrollSnapAlign: 'start'}}>
                 {isLoading && <LoaderV2></LoaderV2>}
                 <ProgrammeContainer style={{color: 'white'}} full={isTracksShown} onClick={this.handleClick}>
                     {/* <ProgrammeImage src={programme.programme_image} alt=""/> */}

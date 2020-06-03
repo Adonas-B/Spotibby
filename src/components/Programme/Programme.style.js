@@ -16,6 +16,7 @@ const ProgrammeContainer =styled.div`
     border-right: 3px solid rgb(255,0,146);
     // border-top: 2px solid rgb(255,0,146);
     border-left: 3px solid rgb(30,215,96);
+    scroll-snap-align: start;
 
 `
 export { ProgrammeContainer }
