@@ -39,12 +39,23 @@ export class Spotibby extends Component {
       get_access_token(this.props.location.hash);
       this.props.history.push('/');
     }
-    let session_search_results = sessionStorage.getItem('search_results');
+
     let session_search_term = sessionStorage.getItem('search_term');
+    let session_search_results = sessionStorage.getItem('search_results');
+    let session_episodes = sessionStorage.getItem('episodes');
+    let session_programme_series_id = sessionStorage.getItem(
+      'programme_series_id'
+    );
+
     session_search_results = JSON.parse(session_search_results);
+    session_episodes = JSON.parse(session_episodes);
+    session_programme_series_id = JSON.parse(session_programme_series_id);
+
     this.setState({
       search_results: session_search_results,
       search_term: session_search_term,
+      episodes: session_episodes,
+      programme_series_id: session_programme_series_id,
     });
   }
 
@@ -79,7 +90,6 @@ export class Spotibby extends Component {
           return;
         }
         res.json().then((data) => {
-          // console.log(data)
           sessionStorage.setItem(
             'search_results',
             JSON.stringify(data.search_results)
@@ -87,7 +97,6 @@ export class Spotibby extends Component {
           sessionStorage.setItem('search_term', this.state.search_term);
           this.setState({
             search_results: data.search_results,
-            // currentDisplay: 'search-results',
             isSearching: false,
           });
         });
@@ -101,6 +110,11 @@ export class Spotibby extends Component {
   };
 
   handleEpisodeClick = (episodes, programme_series_id) => {
+    sessionStorage.setItem('episodes', JSON.stringify(episodes));
+    sessionStorage.setItem(
+      'programme_series_id',
+      JSON.stringify(programme_series_id)
+    );
     this.setState({
       programme_series_id: programme_series_id,
       episodes: episodes,
