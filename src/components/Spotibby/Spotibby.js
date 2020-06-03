@@ -10,12 +10,12 @@ import {
   EpisodesContainer,
   Icon,
   AppContainer,
-} from './Search.style';
+} from './Spotibby.style';
 import { get_access_token } from '../../helpers/QueryParams';
 import Cookies from 'js-cookie';
 import { withRouter } from 'react-router-dom';
 
-export class Search extends Component {
+export class Spotibby extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -218,4 +218,4 @@ export class Search extends Component {
   }
 }
 
-export default withRouter(Search);
+export default withRouter(Spotibby);
